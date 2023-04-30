@@ -1,0 +1,36 @@
+# This workflow will build and push a new Lambda to AWS,
+# and then will deploy a new task definition, when there is a push to the "production" branch.
+#
+# To use this workflow, you will need to complete the following set-up steps:
+#
+# 1. Store an IAM user access key in GitHub Actions secrets named `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+#    See the documentation for each action used below for the recommended IAM policies for this IAM user,
+#    and best practices on handling the access key credentials.
+
+name: AWS Lambda WorkFlow
+
+on:
+  push:
+    branches: [ "production" ]
+
+env:
+  AWS_REGION: us-east-1     # set this to your preferred AWS region, e.g. us-west-1
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+    - name: Deploy Lambda function
+      run: sam deploy --template-file model/template.yaml --stack-name lambda-analytics-stack --capabilities CAPABILITY_IAM
