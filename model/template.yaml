@@ -1,9 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Resources:
-  LogFunction:
+  LogLambda:
     Type: 'AWS::Serverless::Function'
     Properties:
       CodeUri: .
-      Handler: app.lambda_handler
+      Handler: lambdas/log/lamda_log.lambda_handler
       Runtime: python3.9
+      Environment:
+        Variables:
+          ENVIRONMENT: prod
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
