@@ -30,14 +30,20 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
-        
-    - name: Install Python Dependencies
-      run: pip install -r requirements.txt -t ./dependencies
       
     - name: Install Python 3.9
       run: |
         sudo apt-get update
         sudo apt-get install -y python3.9
+        
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
+
+    - name: Add Python path to PATH
+      run: echo "export PATH=$PATH:/usr/local/bin/python" >> $GITHUB_ENV
     
     - name: Deploy Lambda function
       run: |
