@@ -6,13 +6,3 @@ Resources:
     Properties:
       CodeUri: .
       Handler: lambdas/log/lamda_log.lambda_handler
-      Runtime: python3.9
-      Environment:
-        Variables:
-          ENVIRONMENT: prod
-      Events:
-        GetEvent:
-          Type: Api
-          Properties:
-            Path: /
-            Method: GET
