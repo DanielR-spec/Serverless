@@ -9,3 +9,6 @@ Resources:
       Runtime: python3.9
       MemorySize: 128
       Timeout: 10
+      Environment:
+        Variables:
+          VERSION: "1.0.0"
