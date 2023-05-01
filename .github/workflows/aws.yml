@@ -34,6 +34,11 @@ jobs:
     - name: Install Python Dependencies
       run: pip install -r requirements.txt -t ./dependencies
       
+    - name: Install Python 3.9
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3.9
+    
     - name: Deploy Lambda function
       run: |
         sam build --template-file model/template.yaml
