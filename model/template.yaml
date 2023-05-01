@@ -4,5 +4,8 @@ Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
     Properties:
-      CodeUri: .
       Handler: lambdas/log/lamda_log.lambda_handler
+      CodeUri: .
+      Runtime: python3.8
+      MemorySize: 128
+      Timeout: 10
