@@ -40,7 +40,7 @@ jobs:
     - name: Install Python Dependencies
       run: |
         pip install --upgrade pip
-        pip install -r ../requirements.txt -t lambdas/my_lambda
+        pip install -r requirements.txt -t lambdas/log
         
     - name: Set up Python
       uses: actions/setup-python@v2
