@@ -20,6 +20,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: production
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -35,6 +36,11 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y python3.9
+        
+    - name: Install Python Dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r ../requirements.txt -t lambdas/my_lambda
         
     - name: Set up Python
       uses: actions/setup-python@v2
