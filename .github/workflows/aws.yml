@@ -39,6 +39,12 @@ jobs:
 
     - name: Add Python path to PATH
       run: echo "export PATH=$PATH:/usr/local/bin/python" >> $GITHUB_ENV
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
         
     - name: Install Python Dependencies
       run: |
@@ -47,13 +53,7 @@ jobs:
         pip install -r ../requirements.txt -t .
         cd ../
         sam build --template-file infrastructure/template.yaml
-        
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-        architecture: 'x64'
-    
+            
     - name: Deploy Lambda function
       run: |
         sam deploy --template-file infrastructure/template.yaml update-stack --stack-name motivy-analytics-lambdas --capabilities CAPABILITY_IAM --s3-bucket motivy-analytics
