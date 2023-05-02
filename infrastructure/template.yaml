@@ -12,5 +12,5 @@ Resources:
       Timeout: 10
       Environment:
         Variables:
-          VERSION: "1.0.6"
+          VERSION: "1.0.7"
       Description: "Serveless function to store and process log plataform data."
