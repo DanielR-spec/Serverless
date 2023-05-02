@@ -36,6 +36,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y python3.9
+
+    - name: Add Python path to PATH
+      run: echo "export PATH=$PATH:/usr/local/bin/python" >> $GITHUB_ENV
         
     - name: Install Python Dependencies
       run: |
@@ -50,9 +53,6 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
-
-    - name: Add Python path to PATH
-      run: echo "export PATH=$PATH:/usr/local/bin/python" >> $GITHUB_ENV
     
     - name: Deploy Lambda function
       run: |
