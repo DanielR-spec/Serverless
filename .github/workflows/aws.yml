@@ -39,8 +39,11 @@ jobs:
         
     - name: Install Python Dependencies
       run: |
+        cd lambdas/
         pip install --upgrade pip
-        pip install -r requirements.txt -t motivy-analytics-lambdas-LogLambda-ebhzDjXd2E9M
+        pip install -r ../requirements.txt -t .
+        cd ../
+        sam build
         
     - name: Set up Python
       uses: actions/setup-python@v2
