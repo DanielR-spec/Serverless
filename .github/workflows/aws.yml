@@ -46,7 +46,7 @@ jobs:
         python-version: '3.9'
         architecture: 'x64'
      
-    - name: Upload Lambda Layer
+    - name: Upload Package Requirements
       run: |
         pip install --upgrade pip
         mkdir -p aws
