@@ -49,20 +49,10 @@ jobs:
     - name: Upload AWS  Package Requirements
       run: |
         pip install --upgrade pip
-        mkdir -p aws
-        cd aws
-        pip install -r ../requirements.txt -t .
-        cp ../lambdas/log/lambda_log.py .
-        zip -r aws.zip .
+        pip install -r ../requirements.txt -t ../lambdas/log
       working-directory: .
       
     - name: Deploy Lambda function
       run: |
         sam build --template-file infrastructure/template.yaml
         sam deploy --template-file infrastructure/template.yaml update-stack --stack-name motivy-analytics-lambdas --capabilities CAPABILITY_IAM --s3-bucket motivy-analytics
-
-    - name: Copy packages to Lambda function
-      run: |
-        aws lambda update-function-code \
-          --function-name arn:aws:lambda:us-east-1:477446403107:function:motivy-analytics-lambdas-LogLambda-ebhzDjXd2E9M \
-          --zip-file fileb://aws/aws.zip
