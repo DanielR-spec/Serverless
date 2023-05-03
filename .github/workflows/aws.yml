@@ -45,21 +45,17 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
-        
-    - name: Install Python Dependencies
+     
+    - name: Upload Lambda Layer
       run: |
         pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Zip and Upload Lambda Layer
-      run: |
         mkdir -p aws
         cd aws
         pip install -r requirements.txt -t .
         zip -r aws.zip .
         aws s3 cp aws.zip s3://motivy-analytics/aws.zip
       working-directory: .
-            
+
     - name: Deploy Lambda function
       run: |
         sam build --template-file infrastructure/template.yaml
