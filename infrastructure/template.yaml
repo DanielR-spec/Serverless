@@ -25,3 +25,9 @@ Resources:
           # Add the Python requirements to the package
           PythonRequirements:
             - requirements.txt
+# Define the output for the S3 bucket and prefix
+Outputs:
+  S3Bucket:
+    Value: !Sub "arn:aws:s3:::$motivy-analytics"
+  S3Prefix:
+    Value: reck-pckgs
