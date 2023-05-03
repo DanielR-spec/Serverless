@@ -51,7 +51,7 @@ jobs:
         pip install --upgrade pip
         mkdir -p aws
         cd aws
-        pip install -r requirements.txt -t .
+        pip install -r ../requirements.txt -t .
         zip -r aws.zip .
         aws s3 cp aws.zip s3://motivy-analytics/aws.zip
       working-directory: .
