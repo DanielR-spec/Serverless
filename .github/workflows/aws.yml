@@ -49,7 +49,7 @@ jobs:
     - name: Upload AWS  Package Requirements
       run: |
         pip install --upgrade pip
-        pip install -r ../requirements.txt -t ../lambdas/log
+        pip install -r requirements.txt -t lambdas/log
       working-directory: .
       
     - name: Deploy Lambda function
