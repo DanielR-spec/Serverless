@@ -12,5 +12,18 @@ Resources:
       Timeout: 10
       Environment:
         Variables:
-          VERSION: "1.0.11"
+          VERSION: "1.0.12"
       Description: "Serveless function to store and process log plataform data."
+      Layers:
+        - !Ref LogLambdaLayer
+
+  # Define the package options
+      PackageType: Zip
+      Metadata:
+        AWS::CloudFormation::Package:
+          # Define the S3 bucket and prefix to use
+          S3Bucket: motivy-analytics
+          S3Prefix: reck-pckgs
+          # Add the Python requirements to the package
+          PythonRequirements:
+            - requirements.txt
