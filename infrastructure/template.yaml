@@ -9,8 +9,8 @@ Resources:
       CodeUri: ../lambdas/log/
       Runtime: python3.9
       MemorySize: 128
-      Timeout: 10
+      Timeout: 300
       Environment:
         Variables:
-          VERSION: "1.0.26"
+          VERSION: "1.0.28"
       Description: "Serveless function to store and process log plataform data."
