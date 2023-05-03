@@ -14,8 +14,6 @@ Resources:
         Variables:
           VERSION: "1.0.12"
       Description: "Serveless function to store and process log plataform data."
-      Layers:
-        - !Ref LogLambdaLayer
 
   # Define the package options
       PackageType: Zip
