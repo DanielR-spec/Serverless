@@ -68,4 +68,4 @@ jobs:
       run: |
         aws lambda update-function-code \
           --function-name arn:aws:lambda:us-east-1:477446403107:function:motivy-analytics-lambdas-LogLambda-ebhzDjXd2E9M \
-          --zip-file fileb://requirements.txt
+          --zip-file fileb://test.zip
