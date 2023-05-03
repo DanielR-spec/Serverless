@@ -52,7 +52,6 @@ def lambda_handler(event, context):
         result = conn.execute('SELECT COUNT(*) FROM your_table')
         count = result.fetchone()[0]
         print(f'Total rows in table: {count}')
-    '''
     # Set up the connection parameters
     conn = psycopg2.connect(
     	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
@@ -68,16 +67,15 @@ def lambda_handler(event, context):
     rows = cur.fetchall()
 
     # Execute a sample query
-    '''
     cur.execute("INSERT INTO mytable (id, name, age) VALUES (%s, %s, %s)", (1, 'John Doe', 30))
     with open('data.csv', 'r') as f:
 	 cur.copy_expert('COPY mytable FROM STDIN WITH CSV HEADER', f)
     conn.commit()
-    '''
     print(rows)
 
     cur.close()
     conn.close()
+    '''
     message = "Hello, world!"
     return message
 
