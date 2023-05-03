@@ -45,17 +45,14 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
-    - name: Upload Package
-      run: |
-        zip -r test.zip requirements.txt
-      working-directory: .
       
-    - name: Upload Package Requirements
+    - name: Upload AWS  Package Requirements
       run: |
         pip install --upgrade pip
         mkdir -p aws
         cd aws
         pip install -r ../requirements.txt -t .
+        cp ../lambdas/log/lambda_log.py .
         zip -r aws.zip .
       working-directory: .
       
@@ -68,4 +65,4 @@ jobs:
       run: |
         aws lambda update-function-code \
           --function-name arn:aws:lambda:us-east-1:477446403107:function:motivy-analytics-lambdas-LogLambda-ebhzDjXd2E9M \
-          --zip-file fileb://test.zip
+          --zip-file fileb://aws/aws.zip
