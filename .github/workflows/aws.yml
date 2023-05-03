@@ -51,9 +51,7 @@ jobs:
         pip install --upgrade pip
         mkdir -p aws
         cd aws
-        pip install -r ../requirements.txt -t .
-        zip -r aws.zip .
-        aws s3 cp aws.zip s3://motivy-analytics/aws.zip
+        pip install -r ../requirements.txt -t ../lambdas/log
       working-directory: .
 
     - name: Deploy Lambda function
