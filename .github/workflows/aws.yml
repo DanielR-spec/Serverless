@@ -51,8 +51,24 @@ jobs:
         pip install --upgrade pip
         mkdir -p aws
         cd aws
-        pip install -r ../requirements.txt -t ../lambdas
+        pip install -r ../requirements.txt -t .
+        zip -r layer.zip .
+        aws s3 cp layer.zip s3://motivy-analytics/layer.zip
       working-directory: .
+    
+    - name: Publish Lambda Layer
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        cd aws
+        # Publish the layer
+        aws lambda publish-layer-version \
+          --layer-name log-lambda-layer \
+          --description "My Lambda Layer" \
+          --content S3Bucket=motivy-analytics,S3Key=layer.zip \
+          --compatible-runtimes python3.9 \
+          --license-info "MIT"
 
     - name: Deploy Lambda function
       run: |
