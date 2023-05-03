@@ -63,5 +63,5 @@ jobs:
     - name: Copy packages to Lambda function
       run: |
         aws lambda update-function-code \
-          --function-name ${{ motivy-analytics-lambdas-LogLambda-ebhzDjXd2E9M }} \
+          --function-name arn:aws:lambda:us-east-1:477446403107:function:motivy-analytics-lambdas-LogLambda-ebhzDjXd2E9M \
           --zip-file fileb://aws/aws.zip
