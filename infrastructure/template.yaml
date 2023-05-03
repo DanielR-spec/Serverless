@@ -8,9 +8,9 @@ Resources:
       Handler: lambda_log.lambda_handler
       CodeUri: ../lambdas/log/
       Runtime: python3.9
-      MemorySize: 1000
+      MemorySize: 524
       Timeout: 600
       Environment:
         Variables:
-          VERSION: "1.0.31"
+          VERSION: "1.0.32"
       Description: "Serveless function to store and process log plataform data."
