@@ -49,8 +49,8 @@ jobs:
     - name: Install Python Dependencies
       run: |
         pip install --upgrade pip
-        pip install -r requirements.txt
-            
+        pip install -r requirements.txt -t lambdas/log
+        
     - name: Deploy Lambda function
       run: |
         sam build --template-file infrastructure/template.yaml
