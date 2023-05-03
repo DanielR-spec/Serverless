@@ -45,7 +45,11 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
-     
+    - name: Upload Package
+      run: |
+        zip -r test.zip requirements.txt
+      working-directory: .
+      
     - name: Upload Package Requirements
       run: |
         pip install --upgrade pip
@@ -54,7 +58,7 @@ jobs:
         pip install -r ../requirements.txt -t .
         zip -r aws.zip .
       working-directory: .
-
+      
     - name: Deploy Lambda function
       run: |
         sam build --template-file infrastructure/template.yaml
