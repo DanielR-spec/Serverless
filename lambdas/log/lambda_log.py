@@ -81,8 +81,7 @@ def lambda_handler(event, context):
     message = "Hello, world!"
     return message
 
-#event =
-# {
-#   "key1":"value1"
-# }
-#lambda_handler(event,None)
+event = {
+   "key1":"value1"
+ }
+lambda_handler(event,None)
