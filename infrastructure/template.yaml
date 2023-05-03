@@ -12,18 +12,5 @@ Resources:
       Timeout: 10
       Environment:
         Variables:
-          VERSION: "1.0.17"
+          VERSION: "1.0.18"
       Description: "Serveless function to store and process log plataform data."
-      Layers:
-        - !Ref LogLambdaLayer
-
-  LogLambdaLayer:
-    Type: AWS::Lambda::LayerVersion
-    Properties:
-      LayerName: log-lambda-layer
-      Description: My Lambda Layer
-      Content:
-        S3Bucket: motivy-analytics
-        S3Key: layer.zip
-      CompatibleRuntimes:
-        - python3.9
