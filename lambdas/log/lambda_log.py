@@ -27,10 +27,10 @@ def lambda_handler(event, context):
     '''
 
     conn = redshift_connector.connect(
-	host='examplecluster.abc123xyz789.us-west-1.redshift.amazonaws.com',
+	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
     	database='dev',
-    	user='awsuser',
-    	password='my_password'
+    	user='rdsamin',
+    	password='A0so%33r7Jf6'
      )
     # Set up the cursor and excecute query
     #print(f'Create Cursor Query')
