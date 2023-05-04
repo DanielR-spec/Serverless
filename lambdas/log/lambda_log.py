@@ -1,7 +1,6 @@
 #Import library
 
-import psycopg2
-import pymysql
+import pymysql.cursors
 
 def lambda_handler(event, contect):
     # TODO implement
@@ -13,15 +12,15 @@ def lambda_handler(event, contect):
     '''
 
      # Set up the connection parameters
-    conn = psycopg2.connect(
+    conn = pymysql.connect(
     	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
 	port=5439,
 	dbname='dev',
 	user='rdsamin',
 	password='A0so%33r7Jf6'
+	cursorclass=pymysql.cursors.DictCursor
     )
 
-    cur.close()
     conn.close()
 
     message = "Hello, world!"
