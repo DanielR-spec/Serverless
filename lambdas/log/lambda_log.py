@@ -1,19 +1,18 @@
 #Import library
 
-import psycopg2
+import pymysql
 
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
-USER = 'rdsamin'
+USERNAME = 'rdsamin'
 PASSWORD = 'A0so%33r7Jf6'
 PORT = 5439
 DBNAME = 'dev'
 
-def get_redshift_con(password=PASSWORD,
-                     user=USER,
-                     host=HOST,
-                     port=PORT,
-                     dbname=DBNAME):
-    return psycopg2.connect(dbname=dbname,host=host,port=port,user=user,password=password)
+connection = pymysql.connect(host=HOST,
+			     port=PORT,
+			     user=USERNAME,
+                             password=PASSWORD,
+                             database=DBNAME)
 
 def lambda_handler(event, context):
     # TODO implement
@@ -24,35 +23,30 @@ def lambda_handler(event, context):
 	the conexion executing a query
     '''
 
-    # Set up the connection parameters
-    print(f'Create Conexion')
-    conn = get_redshift_con()
-    print(f'Conexion Succeded')
-
    
     # Set up the cursor and excecute query
     print(f'Create Cursor Query')
-    cur = conn.cursor()
+    cursor = connection.cursor()
     query = 'SELECT * FROM exec_time e'
     print(query)	
 
     print(f'Excecute Query')
-    cur.execute(query)
-    print(cur.fetchall())
+    cursor.execute(query)
+    print(cursor.fetchall())
 
     print(f'Committing changes')
-    conn.commit()
+    connection.commit()
 
     print(f'Closing Connection')
-    cur.close()
-    conn.close()
+    cursor.close()
+    connection.close()
 
     message = "Eof"
     print(message)
 
     return "Exited with status code 200"
 
-#event = {
-#   "key1":"value1"
-# }
-#lambda_handler(event,None)
+event = {
+   "key1":"value1"
+ }
+lambda_handler(event,None)
