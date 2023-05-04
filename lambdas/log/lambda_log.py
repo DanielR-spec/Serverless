@@ -26,28 +26,33 @@ def lambda_handler(event, context):
 	the conexion executing a query
     '''
 
-    conn = get_redshift_con()
+    conn = redshift_connector.connect(
+	host='examplecluster.abc123xyz789.us-west-1.redshift.amazonaws.com',
+    	database='dev',
+    	user='awsuser',
+    	password='my_password'
+     )
     # Set up the cursor and excecute query
-    print(f'Create Cursor Query')
+    #print(f'Create Cursor Query')
     cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
-    print(query)	
+    #print(query)	
 
-    print(f'Excecute Query')
+    #print(f'Excecute Query')
     cursor.execute(query)
     row = cursor.fetchall()
-    print(row)
+    #print(row)
 
 
-    print(f'Committing changes')
+    #print(f'Committing changes')
     conn.commit()
 
-    print(f'Closing Connection')
+    #print(f'Closing Connection')
     cursor.close()
     conn.close()
 
     message = "Eof"
-    print(message)
+    #print(message)
 
     return "Exited with status code 200"
 
