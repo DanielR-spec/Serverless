@@ -1,2 +1,2 @@
-psycopg2-binary==2.7.3.2
+psycopg2-binary
 PyMySQL==1.0.3
