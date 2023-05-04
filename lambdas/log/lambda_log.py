@@ -51,7 +51,7 @@ def lambda_handler(event, context):
 
     return "Exited with status code 200"
 
-event = {
-   "key1":"value1"
- }
-lambda_handler(event,None)
+#event = {
+#   "key1":"value1"
+# }
+#lambda_handler(event,None)
