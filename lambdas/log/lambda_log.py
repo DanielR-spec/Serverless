@@ -10,7 +10,7 @@ PORT = 5439
 DBNAME = 'dev'
 
 def get_redshift_con(password=PASSWORD,
-                     user=USER,
+                     user=USERNAME,
                      host=HOST,
                      port=PORT,
                      dbname=DBNAME):
@@ -26,7 +26,7 @@ def lambda_handler(event, context):
 	the conexion executing a query
     '''
 
-   
+    conn = get_redshift_con()
     # Set up the cursor and excecute query
     print(f'Create Cursor Query')
     cursor: redshift_connector.Cursor = conn.cursor()
@@ -40,7 +40,7 @@ def lambda_handler(event, context):
 
 
     print(f'Committing changes')
-    connection.commit()
+    conn.commit()
 
     print(f'Closing Connection')
     cursor.close()
@@ -51,7 +51,7 @@ def lambda_handler(event, context):
 
     return "Exited with status code 200"
 
-#event = {
-#   "key1":"value1"
-# }
-#lambda_handler(event,None)
+event = {
+   "key1":"value1"
+ }
+lambda_handler(event,None)
