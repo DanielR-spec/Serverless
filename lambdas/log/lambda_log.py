@@ -1,6 +1,7 @@
 #Import library
 
-import pymysql
+import redshift_connector
+
 
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
 USERNAME = 'rdsamin'
@@ -8,11 +9,13 @@ PASSWORD = 'A0so%33r7Jf6'
 PORT = 5439
 DBNAME = 'dev'
 
-connection = pymysql.connect(host=HOST,
-			     port=PORT,
-			     user=USERNAME,
-                             password=PASSWORD,
-                             database=DBNAME)
+def get_redshift_con(password=PASSWORD,
+                     user=USER,
+                     host=HOST,
+                     port=PORT,
+                     dbname=DBNAME):
+    return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
+
 
 def lambda_handler(event, context):
     # TODO implement
@@ -26,27 +29,29 @@ def lambda_handler(event, context):
    
     # Set up the cursor and excecute query
     print(f'Create Cursor Query')
-    cursor = connection.cursor()
+    cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
     print(query)	
 
     print(f'Excecute Query')
     cursor.execute(query)
-    print(cursor.fetchall())
+    row = cursor.fetchall()
+    print(row)
+
 
     print(f'Committing changes')
     connection.commit()
 
     print(f'Closing Connection')
     cursor.close()
-    connection.close()
+    conn.close()
 
     message = "Eof"
     print(message)
 
     return "Exited with status code 200"
 
-event = {
-   "key1":"value1"
- }
-lambda_handler(event,None)
+#event = {
+#   "key1":"value1"
+# }
+#lambda_handler(event,None)
