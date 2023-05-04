@@ -1,6 +1,6 @@
 #Import library
 
-import psycopg2
+import redshift_connector
 
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
 USER = 'rdsamin'
@@ -13,7 +13,7 @@ def get_redshift_con(password=PASSWORD,
                      host=HOST,
                      port=PORT,
                      dbname=DBNAME):
-    return psycopg2.connect(dbname=dbname,host=host,port=port,user=user,password=password)
+    return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
 
 def lambda_handler(event, context):
     # TODO implement
@@ -32,19 +32,20 @@ def lambda_handler(event, context):
    
     # Set up the cursor and excecute query
     print(f'Create Cursor Query')
-    cur = conn.cursor()
+    cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
     print(query)	
 
     print(f'Excecute Query')
-    cur.execute(query)
-    print(cur.fetchall())
+    cursor.execute(query)
+    row = cursor.fetchall()
+    print(row)
 
     print(f'Committing changes')
     conn.commit()
 
     print(f'Closing Connection')
-    cur.close()
+    cursor.close()
     conn.close()
 
     message = "Eof"
@@ -52,7 +53,7 @@ def lambda_handler(event, context):
 
     return "Exited with status code 200"
 
-#event = {
-#   "key1":"value1"
-# }
-#lambda_handler(event,None)
+event = {
+   "key1":"value1"
+ }
+lambda_handler(event,None)
