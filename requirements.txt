@@ -1,2 +1,2 @@
-psycopg2-binary
+aws-psycopg2
 PyMySQL==1.0.3
