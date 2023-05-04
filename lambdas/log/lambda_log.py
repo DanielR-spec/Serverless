@@ -2,8 +2,9 @@
 
 import redshift_connector
 
+
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
-USER = 'rdsamin'
+USERNAME = 'rdsamin'
 PASSWORD = 'A0so%33r7Jf6'
 PORT = 5439
 DBNAME = 'dev'
@@ -15,6 +16,7 @@ def get_redshift_con(password=PASSWORD,
                      dbname=DBNAME):
     return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
 
+
 def lambda_handler(event, context):
     # TODO implement
     '''
@@ -23,11 +25,6 @@ def lambda_handler(event, context):
 	with the corresponding aws access keys/secrets and variables to finally test
 	the conexion executing a query
     '''
-
-    # Set up the connection parameters
-    print(f'Create Conexion')
-    conn = get_redshift_con()
-    print(f'Conexion Succeded')
 
    
     # Set up the cursor and excecute query
@@ -41,8 +38,9 @@ def lambda_handler(event, context):
     row = cursor.fetchall()
     print(row)
 
+
     print(f'Committing changes')
-    conn.commit()
+    connection.commit()
 
     print(f'Closing Connection')
     cursor.close()
