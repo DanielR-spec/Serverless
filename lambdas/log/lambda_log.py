@@ -14,10 +14,9 @@ def lambda_handler(event, contect):
     # Set up the connection parameters
     conn = pymysql.connect(
     	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
-	port=5439,
-	dbname='dev',
 	user='rdsamin',
 	password='A0so%33r7Jf6',
+	database='dev',
 	cursorclass=pymysql.cursors.DictCursor
     )
 
