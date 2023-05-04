@@ -1,2 +1,1 @@
-aws-psycopg2
-PyMySQL==1.0.3
+psycopg2-binary
