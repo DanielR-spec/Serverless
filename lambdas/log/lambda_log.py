@@ -11,13 +11,13 @@ def lambda_handler(event, contect):
 	the conexion executing a query
     '''
 
-     # Set up the connection parameters
+    # Set up the connection parameters
     conn = pymysql.connect(
     	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
 	port=5439,
 	dbname='dev',
 	user='rdsamin',
-	password='A0so%33r7Jf6'
+	password='A0so%33r7Jf6',
 	cursorclass=pymysql.cursors.DictCursor
     )
 
