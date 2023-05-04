@@ -25,7 +25,7 @@ print(result)
 
 print("End of excecution")
 '''
-def lambda_handler(event, context):
+def lambda_handler(event, contect):
     # TODO implement
     '''
 	De next steps in order to excecute this lambda is to 
@@ -52,14 +52,8 @@ def lambda_handler(event, context):
         result = conn.execute('SELECT COUNT(*) FROM your_table')
         count = result.fetchone()[0]
         print(f'Total rows in table: {count}')
-    # Set up the connection parameters
-    conn = psycopg2.connect(
-    	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
-	port=5439,
-	dbname='dev',
-	user='rdsamin',
-	password='A0so%33r7Jf6'
-    )
+   
+   
  
     # Construct the connection string
     cur = conn.cursor()
@@ -72,10 +66,20 @@ def lambda_handler(event, context):
 	 cur.copy_expert('COPY mytable FROM STDIN WITH CSV HEADER', f)
     conn.commit()
     print(rows)
+    '''
+
+     # Set up the connection parameters
+    conn = psycopg2.connect(
+    	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
+	port=5439,
+	dbname='dev',
+	user='rdsamin',
+	password='A0so%33r7Jf6'
+    )
 
     cur.close()
     conn.close()
-    '''
+
     message = "Hello, world!"
     return message
 
