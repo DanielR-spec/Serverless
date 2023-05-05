@@ -1,7 +1,6 @@
 #Import library
 
-import redshift_connector
-
+import pymysql
 
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
 USERNAME = 'rdsamin'
@@ -9,13 +8,11 @@ PASSWORD = 'A0so%33r7Jf6'
 PORT = 5439
 DBNAME = 'dev'
 
-def get_redshift_con(password=PASSWORD,
-                     user=USERNAME,
-                     host=HOST,
-                     port=PORT,
-                     dbname=DBNAME):
-    return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
-
+connection = pymysql.connect(host=HOST,
+			     port=PORT,
+			     user=USERNAME,
+           password=PASSWORD,
+           database=DBNAME)
 
 def lambda_handler(event, context):
     # TODO implement
@@ -34,7 +31,7 @@ def lambda_handler(event, context):
 
     # Close cursor index & connection
     cursor.close()
-    conn.close()
+    connection.close()
 
     res = str(row)
     return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
