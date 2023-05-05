@@ -1,6 +1,7 @@
 #Import library
 
-import pymysql
+import redshift_connector
+
 
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
 USERNAME = 'rdsamin'
@@ -8,11 +9,13 @@ PASSWORD = 'A0so%33r7Jf6'
 PORT = 5439
 DBNAME = 'dev'
 
-connection = pymysql.connect(host=HOST,
-			     port=PORT,
-			     user=USERNAME,
-                             password=PASSWORD,
-                             database=DBNAME)
+def get_redshift_con(password=PASSWORD,
+                     user=USERNAME,
+                     host=HOST,
+                     port=PORT,
+                     dbname=DBNAME):
+    return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
+
 
 def lambda_handler(event, context):
     # TODO implement
@@ -23,26 +26,34 @@ def lambda_handler(event, context):
 	the conexion executing a query
     '''
 
-   
+    conn = redshift_connector.connect(
+	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
+    	database='dev',
+	port=5439,
+    	user='rdsamin',
+    	password='A0so%33r7Jf6'
+     )
     # Set up the cursor and excecute query
-    print(f'Create Cursor Query')
-    cursor = connection.cursor()
+    #print(f'Create Cursor Query')
+    cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
-    print(query)	
+    #print(query)	
 
-    print(f'Excecute Query')
+    #print(f'Excecute Query')
     cursor.execute(query)
-    print(cursor.fetchall())
+    row = cursor.fetchall()
+    #print(row)
 
-    print(f'Committing changes')
-    connection.commit()
 
-    print(f'Closing Connection')
+    #print(f'Committing changes')
+    conn.commit()
+
+    #print(f'Closing Connection')
     cursor.close()
-    connection.close()
+    conn.close()
 
     message = "Eof"
-    print(message)
+    #print(message)
 
     return "Exited with status code 200"
 

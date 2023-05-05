@@ -44,6 +44,11 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
+
+    - name: Upload AWS Package Requirements
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt -t lambdas/log
       
     - name: Deploy Lambda function
       run: |
