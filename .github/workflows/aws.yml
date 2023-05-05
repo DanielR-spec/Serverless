@@ -46,13 +46,12 @@ jobs:
         python-version: '3.9'
         architecture: 'x64'
       
-    - name: Upload AWS  Package Requirements
+    - name: Upload AWS Package Requirements
       run: |
         pip install --upgrade pip
         pip install -r requirements.txt -t lambdas/log
-      working-directory: .
       
     - name: Deploy Lambda function
       run: |
         sam build --template-file infrastructure/template.yaml
-        sam deploy --template-file infrastructure/template.yaml update-stack --stack-name motivy-analytics-lambdas --capabilities CAPABILITY_IAM --s3-bucket motivy-analytics
+        sam deploy --template-file infrastructure/template.yaml update-stack --stack-name motivy-analytics-lambdas --capabilities CAPABILITY_IAM

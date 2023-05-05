@@ -50,7 +50,7 @@ def lambda_handler(event, context):
     message = "Eof"
     print(message)
 
-    return "Exited with status code 200"
+    return "Exited with status code 200"+message
 
 #event = {
 #   "key1":"value1"
