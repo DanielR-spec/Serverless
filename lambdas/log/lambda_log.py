@@ -29,6 +29,7 @@ def lambda_handler(event, context):
     conn = redshift_connector.connect(
 	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
     	database='dev',
+	port=5439,
     	user='rdsamin',
     	password='A0so%33r7Jf6'
      )
