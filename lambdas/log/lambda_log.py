@@ -11,40 +11,30 @@ DBNAME = 'dev'
 connection = pymysql.connect(host=HOST,
 			     port=PORT,
 			     user=USERNAME,
-                             password=PASSWORD,
-                             database=DBNAME)
+           password=PASSWORD,
+           database=DBNAME)
 
 def lambda_handler(event, context):
     # TODO implement
-    '''
-	De next steps in order to excecute this lambda is to 
-	import the boto library, contect to the rsd wharehouse 
-	with the corresponding aws access keys/secrets and variables to finally test
-	the conexion executing a query
-    '''
 
-   
+    #Create connection with RDS Cluster
+    conn = get_redshift_con()
+
     # Set up the cursor and excecute query
-    print(f'Create Cursor Query')
-    cursor = connection.cursor()
+    cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
-    print(query)	
-
-    print(f'Excecute Query')
     cursor.execute(query)
-    print(cursor.fetchall())
+    row = cursor.fetchall()
 
-    print(f'Committing changes')
-    connection.commit()
+    # Commit changes if any
+    conn.commit()
 
-    print(f'Closing Connection')
+    # Close cursor index & connection
     cursor.close()
     connection.close()
 
-    message = "Eof"
-    print(message)
-
-    return "Exited with status code 200"
+    res = str(row)
+    return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
 
 #event = {
 #   "key1":"value1"
