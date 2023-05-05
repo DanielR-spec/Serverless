@@ -1,19 +1,21 @@
 #Import library
 
-import psycopg2
+import redshift_connector
+
 
 HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
-USER = 'rdsamin'
+USERNAME = 'rdsamin'
 PASSWORD = 'A0so%33r7Jf6'
 PORT = 5439
 DBNAME = 'dev'
 
 def get_redshift_con(password=PASSWORD,
-                     user=USER,
+                     user=USERNAME,
                      host=HOST,
                      port=PORT,
                      dbname=DBNAME):
-    return psycopg2.connect(dbname=dbname,host=host,port=port,user=user,password=password)
+    return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
+
 
 def lambda_handler(event, context):
     # TODO implement
@@ -24,31 +26,34 @@ def lambda_handler(event, context):
 	the conexion executing a query
     '''
 
-    # Set up the connection parameters
-    print(f'Create Conexion')
-    conn = get_redshift_con()
-    print(f'Conexion Succeded')
-
-   
+    conn = redshift_connector.connect(
+	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
+    	database='dev',
+	port=5439,
+    	user='rdsamin',
+    	password='A0so%33r7Jf6'
+     )
     # Set up the cursor and excecute query
-    print(f'Create Cursor Query')
-    cur = conn.cursor()
+    #print(f'Create Cursor Query')
+    cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
-    print(query)	
+    #print(query)	
 
-    print(f'Excecute Query')
-    cur.execute(query)
-    print(cur.fetchall())
+    #print(f'Excecute Query')
+    cursor.execute(query)
+    row = cursor.fetchall()
+    #print(row)
 
-    print(f'Committing changes')
+
+    #print(f'Committing changes')
     conn.commit()
 
-    print(f'Closing Connection')
-    cur.close()
+    #print(f'Closing Connection')
+    cursor.close()
     conn.close()
 
     message = "Eof"
-    print(message)
+    #print(message)
 
     return "Exited with status code 200"+message
 
