@@ -19,43 +19,25 @@ def get_redshift_con(password=PASSWORD,
 
 def lambda_handler(event, context):
     # TODO implement
-    '''
-	De next steps in order to excecute this lambda is to 
-	import the boto library, contect to the rsd wharehouse 
-	with the corresponding aws access keys/secrets and variables to finally test
-	the conexion executing a query
-    '''
 
-    conn = redshift_connector.connect(
-	host='motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com',
-    	database='dev',
-	port=5439,
-    	user='rdsamin',
-    	password='A0so%33r7Jf6'
-     )
+    #Create connection with RDS Cluster
+    conn = get_redshift_con()
+
     # Set up the cursor and excecute query
-    #print(f'Create Cursor Query')
     cursor: redshift_connector.Cursor = conn.cursor()
     query = 'SELECT * FROM exec_time e'
-    #print(query)	
-
-    #print(f'Excecute Query')
     cursor.execute(query)
     row = cursor.fetchall()
-    #print(row)
 
-
-    #print(f'Committing changes')
+    # Commit changes if any
     conn.commit()
 
-    #print(f'Closing Connection')
+    # Close cursor index & connection
     cursor.close()
     conn.close()
 
-    message = "Eof"
-    #print(message)
-
-    return "Exited with status code 200"
+    res = str(row)
+    return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
 
 #event = {
 #   "key1":"value1"
