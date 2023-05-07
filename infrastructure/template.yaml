@@ -11,9 +11,6 @@ Parameters:
   DBUSER:
     Type: String
     Default: !Sub "${{ secrets.DBUSER }}"
-  DBPORT:
-    Type: String
-    Default: !Sub "${{ secrets.DBPORT }}"
   DBPASSWORD:
     Type: String
     Default: !Sub "${{ secrets.DBPASSWORD }}"
@@ -32,6 +29,5 @@ Resources:
           DBHost: !Ref DBHOST
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
-          DBPort: !Ref DBPORT
           DBPassword: !Ref DBPASSWORD
       Description: "Serveless function to store and process log plataform data."
