@@ -3,13 +3,17 @@ Transform: 'AWS::Serverless-2016-10-31'
 Description: 'The AWS CloudFormation template for this Serverless application'
 Parameters:
   DBHOST:
-    Default: !Sub "${{ resolve:secrets.DBHOST }}"
+    Type: String
+    Default: !Sub "${{ secrets.DBHOST }}"
   DBNAME:
-    Default: !Sub "${{ resolve:secrets.DBNAME }}"
+    Type: String
+    Default: !Sub "${{ secrets.DBNAME }}"
   DBUSER:
-    Default: !Sub "${{ resolve:secrets.DBUSER }}"
+    Type: String
+    Default: !Sub "${{ secrets.DBUSER }}"
   DBPASSWORD:
-    Default: !Sub "${{ resolve:secrets.DBPASSWORD }}"
+    Type: String
+    Default: !Sub "${{ secrets.DBPASSWORD }}"
 
 Resources:
   LogLambda:
