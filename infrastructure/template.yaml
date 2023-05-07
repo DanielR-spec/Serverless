@@ -8,12 +8,16 @@ Parameters:
   DBNAME:
     Type: String
     Default: "${{ secrets.DBNAME }}"
+  DBPORT:
+    Type: Number
+    Default: "${{ secrets.DBPORT }}"
   DBUSER:
     Type: String
     Default: "${{ secrets.DBUSER }}"
   DBPASSWORD:
     Type: String
     Default: "${{ secrets.DBPASSWORD }}"
+
 Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
@@ -25,9 +29,10 @@ Resources:
       Timeout: 200
       Environment:
         Variables:
-          VERSION: "1.0.64"
+          VERSION: "1.0.65"
           DBHost: !Ref DBHOST
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
+          DBPort: !Ref DBPORT
           DBPassword: !Ref DBPASSWORD
       Description: "Serveless function to store and process log plataform data."
