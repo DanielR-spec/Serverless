@@ -66,7 +66,7 @@ jobs:
         --capabilities CAPABILITY_IAM \
         --s3-bucket motivy-analytics \
         --parameter-overrides \
-          DBHost=${{ secrets.DBHOST }} \
-          DBName=${{ secrets.DBNAME }} \
-          DBUser=${{ secrets.DBUSER }} \
-          DBPassword=${{ secrets.DBPASSWORD }}
+          DBHOST=${{ secrets.DBHOST }} \
+          DBNAME=${{ secrets.DBNAME }} \
+          DBUSER=${{ secrets.DBUSER }} \
+          DBPASSWORD=${{ secrets.DBPASSWORD }}
