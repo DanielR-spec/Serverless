@@ -1,6 +1,15 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: 'The AWS CloudFormation template for this Serverless application'
+Parameters:
+  DBHOST:
+    Type: String
+  DBNAME:
+    Type: String
+  DBUSER:
+    Type: String
+  DBPASSWORD:
+    Type: String
 Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
