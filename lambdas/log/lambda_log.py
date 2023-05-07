@@ -1,11 +1,13 @@
 #Import library
 import redshift_connector
+import json
+import os
 
-HOST = 'motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com'
-USERNAME = 'rdsamin'
-PASSWORD = 'A0so%33r7Jf6'
-PORT = 5439
-DBNAME = 'dev'
+HOST = os.environ['DB_HOST']
+USERNAME = os.environ['DB_USER']
+PASSWORD = os.environ['DB_PASSWORD']
+PORT = os.environ['DB_PORT']
+DBNAME = os.environ['DB_NAME']
 
 def get_redshift_con(password=PASSWORD,
                      user=USERNAME,
@@ -18,7 +20,31 @@ def get_redshift_con(password=PASSWORD,
 def lambda_handler(event, context):
     # TODO implement
 
-    #Create connection with RDS Cluster
+    # Parse out query strin params
+    transactionId = event['queryStringParameters']['transactionId']
+    transactionType = event['queryStringParameters']['type']
+    transactionAmount = event['queryStringParameters']['amount']
+
+    #print(transactionId)
+    #print(transactionType)
+    #print(transactionAmount)
+
+    # Construct the body of the response object
+    transactionResponse = {}
+    transactionResponse['transactionId'] = transactionId
+    transactionResponse['type'] = transactionType
+    transactionResponse['amount'] = transactionAmount
+   
+ 
+    # Construct http resoinse object
+    responseObject = {}
+
+    responseObject['statusCode'] = 200
+    responseObject['headers'] = {}
+    responseObject['headers']['Content-Type'] = 'application/json'
+
+    
+    # Create connection with RDS Cluster
     conn = get_redshift_con()
 
     # Set up the cursor and excecute query
@@ -35,9 +61,18 @@ def lambda_handler(event, context):
     conn.close()
 
     res = str(row)
-    return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
+   # return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
+
+   # print(responseObject)
+    transactionResponse['message'] = 'Exited with satatus code 200. res: ' + res
+    responseObject['body'] = json.dumps(transactionResponse)
+    return responseObject
 
 #event = {
-#   "key1":"value1"
+#   'queryStringParameters':{
+#	'transactionId':1,
+#	'type':'HTTP/1',
+#        'amount':128	
+#	}
 # }
 #lambda_handler(event,None)
