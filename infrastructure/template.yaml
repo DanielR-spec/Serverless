@@ -23,8 +23,9 @@ Resources:
       Environment:
         Variables:
           VERSION: "1.0.63"
-          DB_HOST: !Sub "${{resolve:secrets.${{ref DB_HOST}}}}"
-          DB_NAME: !Sub "${{resolve:secrets.${{ref DB_NAME}}}}"
-          DB_USER: !Sub "${{resolve:secrets.${{ref DB_USER}}}}"
-          DB_PASSWORD: !Sub "${{resolve:secrets.${{ref DB_PASSWORD}}}}"
+          DBHOST: "motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com"
+          DBNAME: "dev"
+          DBUSER: "rdsamin"
+          DBPASSWORD: "A0so%33r7Jf6"
+          PORT: 5439
       Description: "Serveless function to store and process log plataform data."
