@@ -5,7 +5,6 @@ Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Name: "LogLambda"
       Handler: lambda_log.lambda_handler
       CodeUri: ../lambdas/log/
       Runtime: python3.9
