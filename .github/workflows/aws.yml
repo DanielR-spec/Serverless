@@ -69,4 +69,5 @@ jobs:
           DBHOST=${{ secrets.DBHOST }} \
           DBNAME=${{ secrets.DBNAME }} \
           DBUSER=${{ secrets.DBUSER }} \
+          DBPORT=${{ secrets.DBPORT }} \
           DBPASSWORD=${{ secrets.DBPASSWORD }}
