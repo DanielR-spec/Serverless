@@ -6,7 +6,7 @@ import os
 HOST = os.environ['DBHost']
 USERNAME = os.environ['DBUser']
 PASSWORD = os.environ['DBPassword']
-PORT = os.environ['DBPort']
+PORT = 5439
 DBNAME = os.environ['DBName']
 
 def get_redshift_con(password=PASSWORD,
