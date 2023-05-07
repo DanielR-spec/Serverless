@@ -26,4 +26,10 @@ Resources:
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
           DBPassword: !Ref DBPASSWORD
+      Events:
+        MyApiEvent:
+          Type: Api
+          Properties:
+            Path: /addLog
+            Method: post
       Description: "Serveless function to store and process log plataform data."
