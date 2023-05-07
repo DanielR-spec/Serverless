@@ -13,9 +13,9 @@ Resources:
       Environment:
         Variables:
           VERSION: "1.0.64"
-          DBHost: !Sub "${{ secrets.DBHOST }}"
-          DBName: !Sub "${{ secrets.DBNAME }}"
-          DBUser: !Sub "${{ secrets.DBUSER }}"
-          DBPort: !Sub "${{ secrets.DBPORT }}"
-          DBPassword: !Sub "${{ secrets.DBPASSWORD }}"
+          DBHost: !Sub "${secrets.DBHOST}"
+          DBName: !Sub "${secrets.DBNAME}"
+          DBUser: !Sub "${secrets.DBUSER}"
+          DBPort: !Sub "${secrets.DBPORT}"
+          DBPassword: !Sub "${secrets.DBPASSWORD}"
       Description: "Serveless function to store and process log plataform data."
