@@ -5,6 +5,7 @@ Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
     Properties:
+      Name: "LogLambda"
       Handler: lambda_log.lambda_handler
       CodeUri: ../lambdas/log/
       Runtime: python3.9
@@ -12,5 +13,10 @@ Resources:
       Timeout: 200
       Environment:
         Variables:
-          VERSION: "1.0.62"
+          VERSION: "1.0.63"
+          DB_HOST: !Ref '${{ secrets.DB_HOST }}'
+          DB_NAME: !Ref '${{ secrets.DB_NAME }}'
+          DB_USER: !Ref '${{ secrets.DB_USER }}'
+          DB_PASSWORD: !Ref '${{ secrets.DB_PASSWORD }}'
+          DB_PORT: !Ref '${{ secrets.DB_PORT }}'
       Description: "Serveless function to store and process log plataform data."
