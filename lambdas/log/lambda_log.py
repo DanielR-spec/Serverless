@@ -1,13 +1,13 @@
-#Import library
+# Import library
 import redshift_connector
 import json
 import os
 
-HOST = os.environ['DB_HOST']
-USERNAME = os.environ['DB_USER']
-PASSWORD = os.environ['DB_PASSWORD']
-PORT = 5439
-DBNAME = os.environ['DB_NAME']
+HOST = os.environ['DBHost']
+USERNAME = os.environ['DBUser']
+PASSWORD = os.environ['DBPassword']
+PORT = os.environ['DBPort']
+DBNAME = os.environ['DBName']
 
 def get_redshift_con(password=PASSWORD,
                      user=USERNAME,
