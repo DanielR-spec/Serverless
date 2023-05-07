@@ -12,6 +12,10 @@ Resources:
       Timeout: 200
       Environment:
         Variables:
-          VERSION: "1.0.63"
-          DBHost: "motivy-redshift-cluster.cxrt7addrmk7.us-east-1.redshift.amazonaws.com"
+          VERSION: "1.0.64"
+          DBHOST: !Sub "${{ secrets.DBHOST }}"
+          DBNAME: !Sub "${{ secrets.DBNAME }}"
+          DBUSER: !Sub "${{ secrets.DBUSER }}"
+          DBPORT: !Sub "${{ secrets.DBPORT }}"
+          DBPASSWORD: !Sub "${{ secrets.DBPASSWORD }}"
       Description: "Serveless function to store and process log plataform data."
