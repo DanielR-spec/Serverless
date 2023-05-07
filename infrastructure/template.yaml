@@ -1,6 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: 'The AWS CloudFormation template for this Serverless application'
+Parameters:
+  DBHOST:
+    Type: String
+  DBNAME:
+    Type: String
+  DBUSER:
+    Type: String
+  DBPORT:
+    Type: Number
+  DBPASSWORD:
+    Type: String
 Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
@@ -13,9 +24,9 @@ Resources:
       Environment:
         Variables:
           VERSION: "1.0.64"
-          DBHost: !Sub "${secrets.DBHOST}"
-          DBName: !Sub "${secrets.DBNAME}"
-          DBUser: !Sub "${secrets.DBUSER}"
-          DBPort: !Sub "${secrets.DBPORT}"
-          DBPassword: !Sub "${secrets.DBPASSWORD}"
+          DBHost: !Sub "${{resolve:secrets.${{ref DBHOST}}}}"
+          DBName: !Sub "${{resolve:secrets.${{ref DBNAME}}}}"
+          DBUser: !Sub "${{resolve:secrets.${{ref DBUSER}}}}"
+          DBPort: !Sub "${{resolve:secrets.${{ref DBPORT}}}}"
+          DBPassword: !Sub "${{resolve:secrets.${{ref DB_PASSWORD}}}}"
       Description: "Serveless function to store and process log plataform data."
