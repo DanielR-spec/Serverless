@@ -13,9 +13,8 @@ Resources:
       Environment:
         Variables:
           VERSION: "1.0.63"
-          DB_HOST: !Sub "${{ secrets['DB_HOST'] }}"
-          DB_NAME: !Sub "${{ secrets['DB_NAME'] }}"
-          DB_USER: !Sub "${{ secrets['DB_USER'] }}"
-          DB_PASSWORD: !Sub "${{ secret['DB_PASSWORD'] }}"
-          DB_PORT: !Sub "${{ secrets['DB_PORT'] }}"
+          DB_HOST: !Sub "${{ secrets.DB_HOST }}"
+          DB_NAME: !Sub "${{ secrets.DB_NAME }}"
+          DB_USER: !Sub "${{ secrets.DB_USER }}"
+          DB_PASSWORD: !Sub "${{ secret.DB_PASSWORD }}"
       Description: "Serveless function to store and process log plataform data."
