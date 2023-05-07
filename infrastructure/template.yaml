@@ -16,7 +16,7 @@ Parameters:
     Default: !Sub "${{ secrets.DBPORT }}"
   DBPASSWORD:
     Type: String
-    Defaulr: !Sub "${{ secrets.DBPASSWORD }}"
+    Default: !Sub "${{ secrets.DBPASSWORD }}"
 Resources:
   LogLambda:
     Type: 'AWS::Serverless::Function'
