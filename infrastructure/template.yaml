@@ -4,16 +4,16 @@ Description: 'The AWS CloudFormation template for this Serverless application'
 Parameters:
   DBHOST:
     Type: String
-    Default: !Sub "${{ secrets.DBHOST }}"
+    Default: !Sub "${secrets.DBHOST}"
   DBNAME:
     Type: String
-    Default: !Sub "${{ secrets.DBNAME }}"
+    Default: !Sub "${secrets.DBNAME}"
   DBUSER:
     Type: String
-    Default: !Sub "${{ secrets.DBUSER }}"
+    Default: !Sub "${secrets.DBUSER}"
   DBPASSWORD:
     Type: String
-    Default: !Sub "${{ secrets.DBPASSWORD }}"
+    Default: !Sub "${secrets.DBPASSWORD}"
 
 Resources:
   LogLambda:
