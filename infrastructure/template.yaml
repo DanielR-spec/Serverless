@@ -12,7 +12,7 @@ Parameters:
     Type: String
     Default: !Sub "${{ secrets.DBUSER }}"
   DBPORT:
-    Type: Number
+    Type: String
     Default: !Sub "${{ secrets.DBPORT }}"
   DBPASSWORD:
     Type: String
