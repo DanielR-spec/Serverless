@@ -8,6 +8,8 @@ Parameters:
     Type: String
   DBUSER:
     Type: String
+  DBPORT:
+    Type: Number
   DBPASSWORD:
     Type: String
 Resources:
@@ -21,9 +23,16 @@ Resources:
       Timeout: 200
       Environment:
         Variables:
-          VERSION: "1.0.66"
+          VERSION: "1.0.67"
           DBHost: !Ref DBHOST
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
+          DBPort: !Ref DBPORT
           DBPassword: !Ref DBPASSWORD
+      Events:
+        MyApiEvent:
+          Type: Api
+          Properties:
+            Path: /addLog
+            Method: post
       Description: "Serveless function to store and process log plataform data."
