@@ -8,9 +8,6 @@ Parameters:
   DBNAME:
     Type: String
     Default: "${{ secrets.DBNAME }}"
-  DBPORT:
-    Type: Number
-    Default: "${{ secrets.DBPORT }}"
   DBUSER:
     Type: String
     Default: "${{ secrets.DBUSER }}"
@@ -33,6 +30,5 @@ Resources:
           DBHost: !Ref DBHOST
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
-          DBPort: !Ref DBPORT
           DBPassword: !Ref DBPASSWORD
       Description: "Serveless function to store and process log plataform data."
