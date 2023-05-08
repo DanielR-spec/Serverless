@@ -1,7 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: 'The AWS CloudFormation template for this Serverless application'
-
 Parameters:
   DBHOST:
     Type: String
@@ -13,13 +12,7 @@ Parameters:
     Type: Number
   DBPASSWORD:
     Type: String
-
 Resources:
-  MyHttpApi:
-    Type: AWS::ApiGatewayV2::Api
-    Properties:
-      Name: motivy-analytics-api
-
   LogLambda:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -42,11 +35,9 @@ Resources:
           Properties:
             Path: /getLog
             Method: get
-            RestApiId: !Ref MyHttpApi
         HttpPostEvent:
           Type: Api
           Properties:
             Path: /postLog
             Method: post
-            RestApiId: !Ref MyHttpApi
       Description: "Serveless function to store and process log plataform data."
