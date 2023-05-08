@@ -6,7 +6,7 @@ import os
 HOST = os.environ['DBHost']
 USERNAME = os.environ['DBUser']
 PASSWORD = os.environ['DBPassword']
-PORT = os.environ['DBPort']
+PORT = int(os.environ['DBPort'])
 DBNAME = os.environ['DBName']
 
 def get_redshift_con(password=PASSWORD,
@@ -63,16 +63,18 @@ def lambda_handler(event, context):
     res = str(row)
    # return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
 
-   # print(responseObject)
     transactionResponse['message'] = 'Exited with satatus code 200. res: ' + res
     responseObject['body'] = json.dumps(transactionResponse)
+
+   # print(responseObject)
+
     return responseObject
 
 #event = {
 #   'queryStringParameters':{
 #	'transactionId':1,
 #	'type':'HTTP/1',
-#        'amount':128	
+#      'amount':128	
 #	}
 # }
 #lambda_handler(event,None)
