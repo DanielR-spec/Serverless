@@ -13,11 +13,6 @@ Parameters:
   DBPASSWORD:
     Type: String
 Resources:
-  MyHttpApi:
-    Type: AWS::ApiGatewayV2::Api
-    Properties:
-      Name: MyHttpApi
-      ProtocolType: HTTP
   LogLambda:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -28,7 +23,7 @@ Resources:
       Timeout: 200
       Environment:
         Variables:
-          VERSION: "1.0.73"
+          VERSION: "1.0.0"
           DBHost: !Ref DBHOST
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
@@ -36,15 +31,17 @@ Resources:
           DBPassword: !Ref DBPASSWORD
       Events:
         HttpGetEvent:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /getLog
             Method: get
-            RestApiId: !Ref MyHttpApi
+            Auth:
+              Authorizer: AWS_IAM
         HttpPostEvent:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /postLog
             Method: post
-            RestApiId: !Ref MyHttpApi
+            Auth:
+              Authorizer: AWS_IAM
       Description: "Serveless function to store and process log plataform data."
