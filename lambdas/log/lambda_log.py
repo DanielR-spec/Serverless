@@ -19,56 +19,61 @@ def get_redshift_con(password=PASSWORD,
 
 def lambda_handler(event, context):
     # TODO implement
-
-    # Parse out query strin params
-    transactionId = event['queryStringParameters']['transactionId']
-    transactionType = event['queryStringParameters']['type']
-    transactionAmount = event['queryStringParameters']['amount']
-
-    #print(transactionId)
-    #print(transactionType)
-    #print(transactionAmount)
-
-    # Construct the body of the response object
-    transactionResponse = {}
-    transactionResponse['transactionId'] = transactionId
-    transactionResponse['type'] = transactionType
-    transactionResponse['amount'] = transactionAmount
-   
- 
-    # Construct http resoinse object
-    responseObject = {}
-
-    responseObject['statusCode'] = 200
-    responseObject['headers'] = {}
-    responseObject['headers']['Content-Type'] = 'application/json'
-
     
-    # Create connection with RDS Cluster
-    conn = get_redshift_con()
+    try:
+	# Parse out query strin params
+	transactionId = event['queryStringParameters']['transactionId']
+	transactionType = event['queryStringParameters']['type']
+	transactionAmount = event['queryStringParameters']['amount']
 
-    # Set up the cursor and excecute query
-    cursor: redshift_connector.Cursor = conn.cursor()
-    query = 'SELECT * FROM exec_time e'
-    cursor.execute(query)
-    row = cursor.fetchall()
+	#print(transactionId)
+	#print(transactionType)
+	#print(transactionAmount)
 
-    # Commit changes if any
-    conn.commit()
+	# Construct the body of the response object
+	transactionResponse = {}
+	transactionResponse['transactionId'] = transactionId
+	transactionResponse['type'] = transactionType
+	transactionResponse['amount'] = transactionAmount
+	   
+	 
+	# Construct http resoinse object
+	responseObject = {}
 
-    # Close cursor index & connection
-    cursor.close()
-    conn.close()
+	responseObject['statusCode'] = 200
+	responseObject['headers'] = {}
+	responseObject['headers']['Content-Type'] = 'application/json'
 
-    res = str(row)
-   # return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
+	   
+	# Create connection with RDS Cluster
+	conn = get_redshift_con()
 
-    transactionResponse['message'] = 'Exited with satatus code 200. res: ' + res
-    responseObject['body'] = json.dumps(transactionResponse)
+	# Set up the cursor and excecute query
+	cursor: redshift_connector.Cursor = conn.cursor()
+	query = 'SELECT * FROM exec_time e'
+	cursor.execute(query)
+	row = cursor.fetchall()
 
-   # print(responseObject)
+	# Commit changes if any
+	conn.commit()
 
-    return responseObject
+	# Close cursor index & connection
+	cursor.close()
+	conn.close()
+
+	res = str(row)
+	# return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
+
+	transactionResponse['message'] = 'Exited with satatus code 200. res: ' + res
+	responseObject['body'] = json.dumps(transactionResponse)
+
+	# print(responseObject)
+
+	return responseObject
+
+    except:
+	
+	return "Hello"
 
 #event = {
 #   'queryStringParameters':{
