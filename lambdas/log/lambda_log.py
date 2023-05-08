@@ -90,9 +90,7 @@ def lambda_handler(event, context):
         #print(responseObject)
         return responseObject
     except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        line = str(exc_type + fname + exc_tb.tb_lineno)
+        line = str(e)
         #print(exc_type, fname, exc_tb.tb_lineno)
         return 'Exited with status code 401: service not found' + line
 
