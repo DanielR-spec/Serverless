@@ -1,7 +1,7 @@
 # Import library
 import redshift_connector
 import json
-import os
+import sys, os
 
 HOST = os.environ['DBHost']
 USERNAME = os.environ['DBUser']
@@ -16,76 +16,91 @@ def get_redshift_con(password=PASSWORD,
                      dbname=DBNAME):
     return redshift_connector.connect(database=dbname,host=host,port=port,user=user,password=password)
 
+
 def lambda_handler(event, context):
 
     # TODO implement
 
     try:
 
-    # Parse out query strin params
+    # Caputer request event
 
-        transactionId = event['queryStringParameters']['transactionId']
-        transactionType = event['queryStringParameters']['type']
-        transactionAmount = event['queryStringParameters']['amount']
+        http_method = event['httpMethod']
 
-    	# print(transactionId)
-	# print(transactionType)
-	# print(transactionAmount)
-
-    # Construct the body of the response object
+    # Construct Object & the body of the response
 
         transactionResponse = {}
-        transactionResponse['transactionId'] = transactionId
-        transactionResponse['type'] = transactionType
-        transactionResponse['amount'] = transactionAmount
-
-    # Construct http resoinse object
-
         responseObject = {}
 
-        responseObject['statusCode'] = 200
-        responseObject['headers'] = {}
-        responseObject['headers']['Content-Type'] = 'application/json'
+    # Review request type and return acording response
 
-    # Create connection with RDS Cluster
+        if http_method == 'GET':
 
-        conn = get_redshift_con()
+    # Construct http response object
 
-    # Set up the cursor and excecute query
+            transactionResponse['message'] = 'Hello from HTTP GET!'
 
-        cursor = conn.cursor()
-        query = 'SELECT * FROM exec_time e'
-        cursor.execute(query)
-        row = cursor.fetchall()
+            responseObject['statusCode'] = 200
+            responseObject['headers'] = {}
+            responseObject['headers']['Content-Type'] = \
+                'application/json'
+            responseObject['body'] = json.dumps(transactionResponse)
+        elif http_method == 'POST':
 
-    # Commit changes if any
+        # Construct http response object
 
-        conn.commit()
+            body = json.loads(event['body'])
+            transactionResponse['message'] = 'Hello from HTTP POST!'
 
-    # Close cursor index & connection
+            responseObject['statusCode'] = 200
+            responseObject['headers'] = {}
+            responseObject['headers']['Content-Type'] = \
+                'application/json'
+            responseObject['body'] = json.dumps(transactionResponse)
+            responseObject['data'] = body
+        else:
 
-        cursor.close()
-        conn.close()
+            if event is not None:
 
-        res = str(row)
+            # Local Testing
 
-    # return "Exited with status code 200.\n- DataBase respondes with:\n"+"-"+res
+                body = event['body']
+                transactionResponse['message'] = \
+                    'Hello from Local Lambda!'
 
-        transactionResponse['message'] = \
-            'Exited with satatus code 200. res: ' + res
-        responseObject['body'] = json.dumps(transactionResponse)
+                responseObject['statusCode'] = 200
+                responseObject['headers'] = {}
+                responseObject['headers']['Content-Type'] = \
+                    'application/json'
+                responseObject['body'] = json.dumps(transactionResponse)
+                responseObject['data'] = body
+            else:
 
-    	# print(responseObject)
+        # Error Handling
 
+                transactionResponse['message'] = \
+                    'Bad Request, Invalid Lambda Invocation!'
+
+                responseObject['statusCode'] = 400
+                responseObject['headers'] = {}
+                responseObject['headers']['Content-Type'] = \
+                    'application/json'
+                responseObject['body'] = json.dumps(transactionResponse)
+
+        #print(responseObject)
         return responseObject
-    except:
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        #print(exc_type, fname, exc_tb.tb_lineno)
+        return 'Exited with status code 401: service not found'
 
-        return 'Hello'
 #event = {
-#   'queryStringParameters':{
+#   'httpMethod':'LOCAL',
+#   'body':{
 #	'transactionId':1,
 #	'type':'HTTP/1',
-#      'amount':128	
+#        'amount':128
 #	}
-# }
+# } 
 #lambda_handler(event,None)
