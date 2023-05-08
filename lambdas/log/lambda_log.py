@@ -1,7 +1,7 @@
 # Import library
 import redshift_connector
 import json
-import sys, os
+import os
 
 HOST = os.environ['DBHost']
 USERNAME = os.environ['DBUser']
@@ -25,7 +25,7 @@ def lambda_handler(event, context):
 
     # Caputer request event
 
-        http_method = event['httpMethod']
+        http_method = event["requestContext"]["http"]["method"]
 
     # Construct Object & the body of the response
 
@@ -91,8 +91,9 @@ def lambda_handler(event, context):
         return responseObject
     except Exception as e:
         line = str(e)
+        ev = str(event)
         #print(exc_type, fname, exc_tb.tb_lineno)
-        return 'Exited with status code 401: service not found' + line
+        return 'Exited with status code 401: service not found' + line + ev
 
 #event = {
 #   'httpMethod':'LOCAL',
