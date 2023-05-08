@@ -25,7 +25,7 @@ def lambda_handler(event, context):
 
     # Caputer request event
 
-        http_method = http_method = event["requestContext"]["http"]["method"]
+        http_method = event["requestContext"]["http"]["method"]
 
     # Construct Object & the body of the response
 
