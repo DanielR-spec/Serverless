@@ -35,13 +35,9 @@ Resources:
           Properties:
             Path: /getLog
             Method: get
-            Auth:
-              Authorizer: AWS_IAM
         HttpPostEvent:
           Type: HttpApi
           Properties:
             Path: /postLog
             Method: post
-            Auth:
-              Authorizer: AWS_IAM
       Description: "Serveless function to store and process log plataform data."
