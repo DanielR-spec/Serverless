@@ -93,7 +93,7 @@ def lambda_handler(event, context):
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         #print(exc_type, fname, exc_tb.tb_lineno)
-        return 'Exited with status code 401: service not found'
+        return 'Exited with status code 401: service not found' + exc_type + fname + exc_tb.tb_lineno
 
 #event = {
 #   'httpMethod':'LOCAL',
