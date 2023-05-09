@@ -36,7 +36,7 @@ def lambda_handler(event, context):
 
         if http_method == 'GET':
 
-    # Construct http response object
+        # Construct http response object
 
             transactionResponse['message'] = 'Hello from HTTP GET!'
 
@@ -45,6 +45,7 @@ def lambda_handler(event, context):
             responseObject['headers']['Content-Type'] = \
                 'application/json'
             responseObject['body'] = json.dumps(transactionResponse)
+        
         elif http_method == 'POST':
 
         # Construct http response object
@@ -58,49 +59,34 @@ def lambda_handler(event, context):
                 'application/json'
             responseObject['body'] = json.dumps(transactionResponse)
             responseObject['data'] = body
+        
         else:
-
-            if event is not None:
-
-            # Local Testing
-
-                body = event['body']
-                transactionResponse['message'] = \
-                    'Hello from Local Lambda!'
-
-                responseObject['statusCode'] = 200
-                responseObject['headers'] = {}
-                responseObject['headers']['Content-Type'] = \
-                    'application/json'
-                responseObject['body'] = json.dumps(transactionResponse)
-                responseObject['data'] = body
-            else:
 
         # Error Handling
 
-                transactionResponse['message'] = \
-                    'Bad Request, Invalid Lambda Invocation!'
+            transactionResponse['message'] = \
+                'Bad Request, Invalid Lambda Invocation!'
 
-                responseObject['statusCode'] = 400
-                responseObject['headers'] = {}
-                responseObject['headers']['Content-Type'] = \
-                    'application/json'
-                responseObject['body'] = json.dumps(transactionResponse)
+            responseObject['statusCode'] = 400
+            responseObject['headers'] = {}
+            responseObject['headers']['Content-Type'] = \
+                'application/json'
+            responseObject['body'] = json.dumps(transactionResponse)
 
-        #print(responseObject)
+        # print(responseObject)
         return responseObject
     except Exception as e:
-        line = str(e)
-        ev = str(event)
-        #print(exc_type, fname, exc_tb.tb_lineno)
-        return 'Exited with status code 401: service not found' + line + ev
+        ErrorLine = str(e)
+        # ev = str(event)
+        # print(ev)
+        return 'Exited with status code 401: service not found' + ErrorLine
 
 #event = {
-#   'httpMethod':'LOCAL',
-#   'body':{
-#	'transactionId':1,
-#	'type':'HTTP/1',
-#        'amount':128
-#	}
-# } 
+#    "requestContext":{
+#      "http":{
+#         "method":"SAD",
+#      }
+#   },
+#   "body":"{\n   \"httpMethod\":\"POST\",\n   \"body\":{\n\t\"transactionId\":1,\n\t\"type\":\"HTTP/1\",\n    \"amount\":128\n}\n}"
+#}
 #lambda_handler(event,None)
