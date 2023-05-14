@@ -49,8 +49,8 @@ def lambda_handler(event, context):
         elif http_method == 'POST':
 
         # Construct http response object
-
-            body = json.loads(event['body'])
+            data = json.dump(event['body'])
+            # body = json.loads(event['body'])
             transactionResponse['message'] = 'Hello from HTTP POST!'
 
             responseObject['statusCode'] = 200
@@ -58,7 +58,7 @@ def lambda_handler(event, context):
             responseObject['headers']['Content-Type'] = \
                 'application/json'
             responseObject['body'] = json.dumps(transactionResponse)
-            responseObject['data'] = body
+            responseObject['data'] = data
         
         else:
 
