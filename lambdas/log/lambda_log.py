@@ -49,7 +49,7 @@ def lambda_handler(event, context):
         elif http_method == 'POST':
 
         # Construct http response object
-            data = json.dump(event['body'])
+            data = json.dumps(event['body'])
             # body = json.loads(event['body'])
             transactionResponse['message'] = 'Hello from HTTP POST!'
 
