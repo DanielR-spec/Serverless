@@ -25,7 +25,9 @@ def lambda_handler(event, context):
 
     # Caputer request event
 
-        http_method = event["requestContext"]["http"]["method"]
+        data = json.loads(event)
+        http_method = data["requestContext"]["http"]["method"]
+        
 
     # Construct Object & the body of the response
 
@@ -49,8 +51,9 @@ def lambda_handler(event, context):
         elif http_method == 'POST':
 
         # Construct http response object
-            data = json.dumps(event['body'])
-            # body = json.loads(event['body'])
+            body = data['body']
+            print(body)
+
             transactionResponse['message'] = 'Hello from HTTP POST!'
 
             responseObject['statusCode'] = 200
@@ -58,7 +61,7 @@ def lambda_handler(event, context):
             responseObject['headers']['Content-Type'] = \
                 'application/json'
             responseObject['body'] = json.dumps(transactionResponse)
-            responseObject['data'] = data
+            responseObject['data'] = body
         
         else:
 
@@ -73,20 +76,10 @@ def lambda_handler(event, context):
                 'application/json'
             responseObject['body'] = json.dumps(transactionResponse)
 
-        # print(responseObject)
         return responseObject
     except Exception as e:
         ErrorLine = str(e)
-        # ev = str(event)
-        # print(ev)
         return 'Exited with status code 401: service not found' + ErrorLine
 
-#event = {
-#    "requestContext":{
-#      "http":{
-#         "method":"SAD",
-#      }
-#   },
-#   "body":"{\n   \"httpMethod\":\"POST\",\n   \"body\":{\n\t\"transactionId\":1,\n\t\"type\":\"HTTP/1\",\n    \"amount\":128\n}\n}"
-#}
-#lambda_handler(event,None)
+# event = "{\"requestContext\":{\"http\":{\"method\":\"POST\"}},\"body\":{\"request_timestamp\":\"2023-05-15T05:45:37.141Z\",\"response_timestamp\":\"2023-05-15T05:45:37.232Z\",\"duration\":91,\"request_type\":\"POST\",\"request_path\":\"/login\",\"user_id\":32,\"user_email\":\"aprego-local@motivy.co\",\"user_name\":\"Alberto Anitalavalatina\",\"user_last\":\"lorem itsum dolor sit amet\",\"user_country_id\":1,\"user_time_zone\":\"America/Los_Angeles\",\"org_id\":1,\"org_name\":\"Test Org 1\",\"response_status\":true,\"error\":\"Exited with status code 200\"}}"
+# lambda_handler(event,None)

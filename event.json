@@ -1,0 +1,8 @@
+{
+    "requestContext":{
+        "http":{
+            "method":"POST"
+          }
+      },
+    "body":"{\n   \"httpMethod\":\"POST\",\n   \"body\":{\n\t\"transactionId\":1,\n\t\"type\":\"HTTP/1\",\n    \"amount\":128\n}\n}"
+}
