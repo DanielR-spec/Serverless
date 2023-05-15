@@ -52,7 +52,6 @@ def lambda_handler(event, context):
 
         # Construct http response object
             body = data['body']
-            print(body)
 
             transactionResponse['message'] = 'Hello from HTTP POST!'
 
