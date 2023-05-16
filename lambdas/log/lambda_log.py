@@ -26,7 +26,7 @@ def lambda_handler(event, context):
     # Caputer request event
 
         # data = json.loads(data)
-        data = event
+        data = json.loads(json.loads(event))
         http_method = data["requestContext"]["http"]["method"]
         
 
