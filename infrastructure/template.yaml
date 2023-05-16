@@ -23,7 +23,7 @@ Resources:
       Timeout: 200
       Environment:
         Variables:
-          VERSION: "1.0.10"
+          VERSION: "1.0.12"
           DBHost: !Ref DBHOST
           DBName: !Ref DBNAME
           DBUser: !Ref DBUSER
