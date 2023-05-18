@@ -25,7 +25,7 @@ def lambda_handler(event, context):
 
     # Caputer request event
 
-        # data = json.loads(data)
+        #data = json.loads(event)
         data = event
         http_method = data["requestContext"]["http"]["method"]
         
@@ -59,17 +59,21 @@ def lambda_handler(event, context):
 
         # Set up the cursor and excecute query
             cursor: redshift_connector.Cursor = conn.cursor()
-            table = "execution_time_logs_test"
+            table = "execution_time_logs_dev"
 
         # Get unique id 
             get_id = f"SELECT MAX(id) from {table}"
             cursor.execute(get_id)
             max_id = cursor.fetchone()[0]
             conn.commit()
+            if max_id is None:
+            	max_id = 1
+            else:
+            	max_id = max_id + 1
 
         # Construct the json instert object
             insert = {
-                "id":max_id+1,
+                "id":max_id,
                 "user_id":body["user_id"],
                 "user_email":body["user_email"],
                 "first_name":body["user_name"],
@@ -82,6 +86,7 @@ def lambda_handler(event, context):
                 "response_timestamp":body["response_timestamp"],
                 "duration":body["duration"],
                 "response_status":body["response_status"],
+                "device_type":body["device_type"],
                 "country_id":body["user_country_id"],
                 "time_zone":body["user_time_zone"],
                 "error":body["error"]
@@ -92,7 +97,7 @@ def lambda_handler(event, context):
             
 
         # Construct the SQL statement to insert data into the Redshift table
-            insert_sql = f"INSERT INTO {table} (id,user_id,user_email,first_name,last_name,organization_id,organization_name,request_type,request_path,request_timestamp,response_timestamp,duration,response_status,country_id,time_zone,error) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            insert_sql = f"INSERT INTO {table} (id,user_id,user_email,first_name,last_name,organization_id,organization_name,request_type,request_path,request_timestamp,response_timestamp,duration,response_status,device_type,country_id,time_zone,error) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
         # Execute the insert statement to load data into the Redshift table
             cursor.execute(insert_sql, json_list)
@@ -127,8 +132,33 @@ def lambda_handler(event, context):
         return responseObject
     except Exception as e:
         ErrorLine = str(e)
-        print(ErrorLine)
+        # print(ErrorLine)
         return 'Exited with status code 401: service not found' + ErrorLine
-
-#event = "{\"requestContext\":{\"http\":{\"method\":\"POST\"}},\"body\":{\"request_timestamp\":\"2023-05-15T05:45:37.141Z\",\"response_timestamp\":\"2023-05-15T05:45:37.232Z\",\"duration\":91,\"request_type\":\"POST\",\"request_path\":\"/login\",\"user_id\":32,\"user_email\":\"aprego-local@motivy.co\",\"user_name\":\"Alberto Anitalavalatina\",\"user_last\":\"lorem itsum dolor sit amet\",\"user_country_id\":1,\"user_time_zone\":\"America/Los_Angeles\",\"org_id\":1,\"org_name\":\"Test Org 1\",\"response_status\":true,\"error\":\"Exited with status code 200\"}}"
-#lambda_handler(event,None)
+'''
+event = {
+  'requestContext': {
+    'http': {
+      'method': 'POST'
+    }
+  },
+  'body': {
+    'user_id': 34,
+    'user_email': 'juan@motivy.co',
+    'user_name': 'Juan avalatina',
+    'user_last': 'Brown',
+    'org_id': 2,
+    'org_name': 'PBD',
+    'request_type': 'POST',
+    'request_path': '/login',
+    'request_timestamp': '2023-05-16T06:45:37.141Z',
+    'response_timestamp': '2023-05-16T06:45:37.332Z',
+    'duration': 101,
+    'response_status': True,
+    'device_type': 'Mobil',
+    'user_country_id': 2,
+    'user_time_zone': 'America/Los_Angeles',
+    'error': 'Exited with status code 200'
+  }
+}
+lambda_handler(event,None)
+'''
