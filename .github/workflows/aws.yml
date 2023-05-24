@@ -11,8 +11,7 @@ name: AWS Lambda WorkFlow
 
 on:
   push:
-    branches: [ "production" ]
-    branches: [ "development" ]
+    branches: [ "production" , "development" ]
 
 env:
   AWS_REGION: us-east-1     # set this to your preferred AWS region, e.g. us-west-1
@@ -25,7 +24,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -45,7 +44,7 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
-        
+
     - name: Group Lambda & Package Requirements
       run: |
         pip install --upgrade pip
@@ -56,7 +55,7 @@ jobs:
         echo "DBHOST=${{ secrets.DBHOST }}"
         echo "DBNAME=${{ secrets.DBNAME }}"
         echo "DBUSER=${{ secrets.DBUSER }}"
-        echo "DBPASSWORD=${{ secrets.DBPASSWORD }}"     
+        echo "DBPASSWORD=${{ secrets.DBPASSWORD }}"
 
     - name: Deploy Lambda Dev
       if: github.ref == 'refs/heads/development'
@@ -73,9 +72,9 @@ jobs:
           DBUSER=${{ secrets.DBUSER }} \
           DBPORT=${{ secrets.DBPORT }} \
           DBPASSWORD=${{ secrets.DBPASSWORD }}
-          
+
     - name: Deploy Lambda Prod
-      if: github.ref == 'refs/heads/production'    
+      if: github.ref == 'refs/heads/production'
       run: |
         sam build --template-file infrastructure/template.yaml
         sam deploy \
