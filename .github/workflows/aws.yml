@@ -12,6 +12,7 @@ name: AWS Lambda WorkFlow
 on:
   push:
     branches: [ "production" ]
+    branches: [ "development" ]
 
 env:
   AWS_REGION: us-east-1     # set this to your preferred AWS region, e.g. us-west-1
@@ -57,12 +58,29 @@ jobs:
         echo "DBUSER=${{ secrets.DBUSER }}"
         echo "DBPASSWORD=${{ secrets.DBPASSWORD }}"     
 
-    - name: Deploy Lambda function & Packages
+    - name: Deploy Lambda Dev
+      if: github.ref == 'refs/heads/development'
       run: |
         sam build --template-file infrastructure/template.yaml
         sam deploy \
         --template-file infrastructure/template.yaml \
-        update-stack --stack-name motivy-analytics-lambdas \
+        update-stack --stack-name login-duration-staging \
+        --capabilities CAPABILITY_IAM \
+        --s3-bucket motivy-analytics \
+        --parameter-overrides \
+          DBHOST=${{ secrets.DBHOST }} \
+          DBNAME=${{ secrets.DBNAME }} \
+          DBUSER=${{ secrets.DBUSER }} \
+          DBPORT=${{ secrets.DBPORT }} \
+          DBPASSWORD=${{ secrets.DBPASSWORD }}
+          
+    - name: Deploy Lambda Prod
+      if: github.ref == 'refs/heads/production'    
+      run: |
+        sam build --template-file infrastructure/template.yaml
+        sam deploy \
+        --template-file infrastructure/template.yaml \
+        update-stack --stack-name login-duration-prod \
         --capabilities CAPABILITY_IAM \
         --s3-bucket motivy-analytics \
         --parameter-overrides \
