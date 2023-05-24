@@ -13,7 +13,7 @@ Parameters:
   DBPASSWORD:
     Type: String
 Resources:
-  LogLambda:
+  lambda:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: lambda_log.lambda_handler
